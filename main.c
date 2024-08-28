@@ -93,8 +93,8 @@ int is_visible(Map *map, Character *character, int x, int y) {
 void print_map(Map *map, Character *character, WINDOW *window) {
   int x_start = character->x - TILE_SIZE / 2;
   int y_start = character->y - TILE_SIZE / 2;
-  int x_end = x_start + TILE_SIZE;
-  int y_end = y_start + TILE_SIZE;
+  int x_end = x_start + TILE_SIZE; // currently unused...
+  int y_end = y_start + TILE_SIZE; // currently unused...
 
   for (int y = 0; y < TILE_SIZE; y++) {
     for (int x = 0; x < TILE_SIZE; x++) {
