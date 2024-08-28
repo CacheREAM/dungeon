@@ -1,3 +1,4 @@
+#include <math.h>
 #include <ncurses.h>
 #include <stdlib.h>
 #include <time.h>
@@ -74,6 +75,21 @@ void carve_room(Map *map, Room *room) {
   }
 }
 
+int is_visible(Map *map, Character *character, int x, int y) {
+  int dx = x - character->x;
+  int dy = y - character->y;
+  int distance = sqrt(dx * dx + dy * dy);
+
+  for (int i = 1; i < distance; i++) {
+    int world_x = character->x + dx * i / distance;
+    int world_y = character->y + dy * i / distance;
+    if (map->tiles[world_y][world_x].impassable) {
+      return 0;
+    }
+  }
+  return 1;
+}
+
 void print_map(Map *map, Character *character, WINDOW *window) {
   int x_start = character->x - TILE_SIZE / 2;
   int y_start = character->y - TILE_SIZE / 2;
@@ -86,12 +102,16 @@ void print_map(Map *map, Character *character, WINDOW *window) {
       int world_y = y_start + y;
       if (world_x >= 0 && world_x < map->width && world_y >= 0 &&
           world_y < map->height) {
-        if (map->tiles[world_y][world_x].impassable) {
-          mvwprintw(window, y, x, "#");
-        } else if (world_x == character->x && world_y == character->y) {
-          mvwprintw(window, y, x, "@");
+        if (is_visible(map, character, world_x, world_y)) {
+          if (map->tiles[world_y][world_x].impassable) {
+            mvwprintw(window, y, x, "#");
+          } else if (world_x == character->x && world_y == character->y) {
+            mvwprintw(window, y, x, "@");
+          } else {
+            mvwprintw(window, y, x, ".");
+          }
         } else {
-          mvwprintw(window, y, x, ".");
+          mvwprintw(window, y, x, " ");
         }
       } else {
         mvwprintw(window, y, x, " ");
