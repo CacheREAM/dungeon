@@ -190,20 +190,41 @@ int main() {
       character.x = rooms[0].x + rooms[0].width / 2;
       character.y = rooms[0].y + rooms[0].height / 2;
     }
-    if (c == 'w' && character.y > 0 &&
-        !map->tiles[character.y - 1][character.x].impassable) {
-      character.y--;
-    }
-    if (c == 's' && character.y < map->height - 1 &&
-        !map->tiles[character.y + 1][character.x].impassable) {
-      character.y++;
-    }
-    if (c == 'a' && character.x > 0 &&
+    if (c == 'h' && character.x > 0 &&
         !map->tiles[character.y][character.x - 1].impassable) {
       character.x--;
     }
-    if (c == 'd' && character.x < map->width - 1 &&
+    if (c == 'j' && character.y < map->height - 1 &&
+        !map->tiles[character.y + 1][character.x].impassable) {
+      character.y++;
+    }
+    if (c == 'k' && character.y > 0 &&
+        !map->tiles[character.y - 1][character.x].impassable) {
+      character.y--;
+    }
+    if (c == 'l' && character.x < map->width - 1 &&
         !map->tiles[character.y][character.x + 1].impassable) {
+      character.x++;
+    }
+    if (c == 'y' && character.y > 0 && character.x > 0 &&
+        !map->tiles[character.y - 1][character.x - 1].impassable) {
+      character.y--;
+      character.x--;
+    }
+    if (c == 'u' && character.y < map->height - 1 &&
+        character.x < map->width - 1 &&
+        !map->tiles[character.y + 1][character.x + 1].impassable) {
+      character.y++;
+      character.x++;
+    }
+    if (c == 'b' && character.y < map->height - 1 && character.x > 0 &&
+        !map->tiles[character.y + 1][character.x - 1].impassable) {
+      character.y++;
+      character.x--;
+    }
+    if (c == 'n' && character.y > 0 && character.x < map->width - 1 &&
+        !map->tiles[character.y - 1][character.x + 1].impassable) {
+      character.y--;
       character.x++;
     }
   }
